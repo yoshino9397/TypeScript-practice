@@ -6,12 +6,27 @@ const users: { name: string; id: number }[] = [
   { name: "Jane Doe", id: 2 },
   { name: "Billy Doe", id: 3 },
 ];
+interface funcProps {
+  setValue: (params: string) => any;
+}
+
+function Child({ setValue }: funcProps) {
+  return (
+    <>
+      <div>Child</div>
+      <button onClick={() => setValue("Changed!")}>Change Parent Value</button>
+    </>
+  );
+}
 
 function App() {
   const [count, setCount] = useState<number>(0);
   const [toggle, setToggle] = useState<boolean>(true);
   const [text, setText] = useState<string>("");
   const [input, setInput] = useState<string>("");
+  const [value, setValue] = useState<string>(
+    "I need to be updated from my child"
+  );
 
   return (
     <div className="App">
@@ -49,7 +64,14 @@ function App() {
         <button disabled={input ? false : true}>Submit</button>
       </div>
       <div className="callback">
-        
+        <h3>Update Parent State Challenge</h3>
+        <div className="wrapper">
+          <div>Parent</div>
+          <div className="box-wrapper">{value}</div>
+        </div>
+        <div className="wrapper">
+          <Child setValue={setValue} />
+        </div>
       </div>
     </div>
   );
